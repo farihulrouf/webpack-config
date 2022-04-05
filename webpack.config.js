@@ -8,6 +8,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js',
+        assetModuleFilename: '[name][ext]',
         clean: true,
     },
     devtool: 'inline-source-map',
@@ -20,8 +21,20 @@ module.exports = {
     //loaders
     module: {
         rules: [
+            //csss
             {test: /\.css$/, use: ['style-loader','css-loader']},
-            {test: /\.(svg|ico|png|webp|jpg|gif|jpeg)$/, type:'asset/resource'}
+            //images
+            {test: /\.(svg|ico|png|webp|jpg|gif|jpeg)$/, type:'asset/resource'},
+            //js for babel
+            { test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            }
         ]
     },
     //plugins
