@@ -8,7 +8,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js',
-        assetModuleFilename: '[name][ext]',
+        assetModuleFilename: 'images/[name][ext][query]',
         clean: true,
     },
     devtool: 'inline-source-map',
@@ -34,13 +34,18 @@ module.exports = {
                         presets: ['@babel/preset-env']
                     }
                 }
-            }
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|svg)$/,
+                loader: 'file-loader',
+                options: { name: '[name].[ext]', outputPath: 'fonts/', }
+            },
         ]
     },
     //plugins
     plugins: [
         new HtmlWebpackPlugin({
-            title: "just a Demo",
+            title: "E-commerce",
             filename: 'index.html',
             template: path.resolve(__dirname, 'src/temp.html')
         }),
